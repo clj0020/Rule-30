@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Rule 30</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="action_execute">Execute Rule 30</string>
+    <string name="action_execute_from_center">Execute Rule 30 from Center Out</string>
+    <string name="action_randomize">Randomize World</string>
+    <string name="action_shuffle">Shuffle World</string>
+    <string name="action_reset_world">Reset World</string>
+    <string name="action_reset_camera">Reset Camera</string>
+
+    <string name="error_message">An error occurred: %s</string>
+    <string name="error_no_world">No world found!</string>
+    <string name="error_single_point_center_out">Performing rule 30 center out with single point will create a blank world. Reset world to start over.</string>
+    <string name="error_single_point_shuffle">Cannot shuffle with single point.</string>
+
+</resources>

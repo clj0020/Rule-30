@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_execute_rule_30"
+        android:icon="@drawable/ic_execute"
+        android:title="@string/action_execute" />
+
+    <item
+        android:id="@+id/item_execute_rule_30_from_center"
+        android:icon="@drawable/ic_execute"
+        android:title="@string/action_execute_from_center" />
+
+    <item
+        android:id="@+id/item_randomize_world"
+        android:icon="@drawable/ic_randomize"
+        android:title="@string/action_randomize" />
+
+    <item
+        android:id="@+id/item_shuffle_world"
+        android:icon="@drawable/ic_shuffle"
+        android:title="@string/action_shuffle" />
+
+    <item
+        android:id="@+id/item_reset_world"
+        android:icon="@drawable/ic_reset"
+        android:title="@string/action_reset_world" />
+
+</menu>
