@@ -1,7 +1,7 @@
 package com.carson.rule30.ui.base
 
-import android.annotation.TargetApi
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.annotation.LayoutRes
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
@@ -50,5 +50,16 @@ abstract class BaseActivity<T: ViewDataBinding, V : BaseViewModel<*>> : AppCompa
         this.mViewModel = if (mViewModel == null) viewModel else mViewModel
         viewDataBinding?.setVariable(bindingVariable, mViewModel)
         viewDataBinding?.executePendingBindings()
+    }
+
+    /**
+     * Gets the width of the screen in pixels.
+     *
+     * @return widthPixels
+     */
+    fun getWidth(): Int {
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return displayMetrics.widthPixels
     }
 }

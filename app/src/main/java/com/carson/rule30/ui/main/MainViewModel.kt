@@ -15,10 +15,6 @@ class MainViewModel(dataManager: DataManager,
     var worldLiveData: MutableLiveData<World> = MutableLiveData()
     val pointsLiveData: MutableLiveData<List<WorldPoint>> = MutableLiveData()
 
-    init {
-        resetWorld()
-    }
-
     /**
      * Executes rule 30 on the current world. Posts to the relevant live data.
      */
@@ -90,11 +86,13 @@ class MainViewModel(dataManager: DataManager,
 
     /**
      * Randomly generates a new world.
+     *
+     * @param width - The width of the world to create (height will be half).
      */
-    fun randomlyGenerateWorld() {
+    fun randomlyGenerateWorld(width: Int) {
         setIsLoading(true)
         compositeDisposable.add(
-            dataManager.randomlyGenerateWorld(500, 1000, 20)
+            dataManager.randomlyGenerateWorld(numGenerations = width / 2, numElements = width, percentageChanceOne = 20)
                 .flatMap { world ->
                     worldLiveData.postValue(world)
                     dataManager.extractPointsFromWorld(world)
@@ -113,12 +111,14 @@ class MainViewModel(dataManager: DataManager,
 
     /**
      * Resets the world to a single point.
+     *
+     * @param width - The width of the world to create (height will be half).
      */
-    fun resetWorld() {
+    fun resetWorld(width: Int) {
         setIsLoading(true)
         compositeDisposable.add(
             Single.fromCallable {
-                    createInitialWorld()
+                    createInitialWorld(width)
                 }
                 .subscribeOn(schedulerProvider.io())
                 .flatMap { world ->
@@ -153,10 +153,12 @@ class MainViewModel(dataManager: DataManager,
     /**
      * Creates the initial world.
      *
+     * @param width - The width of the world to create (height will be half).
+     *
      * @return World - a world with a single point in the center of the first generation.
      */
-    private fun createInitialWorld(): World {
-        val initialWorld = World(numGenerations = 500, numElements = 1000)
+    private fun createInitialWorld(width: Int): World {
+        val initialWorld = World(numGenerations = width / 2, numElements = width)
         initialWorld.generate()
 
         val centerElementIndex = ((initialWorld.numElements - 1) / 2.0).roundToInt()
@@ -165,5 +167,4 @@ class MainViewModel(dataManager: DataManager,
 
         return initialWorld
     }
-
 }

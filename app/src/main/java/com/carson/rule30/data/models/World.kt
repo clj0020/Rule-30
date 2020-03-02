@@ -1,7 +1,6 @@
 package com.carson.rule30.data.models
 
 import com.carson.rule30.utils.shuffle
-import kotlin.math.roundToInt
 import kotlin.random.Random.Default.nextInt
 
 class World(val numGenerations: Int = 256, val numElements: Int = 256) {

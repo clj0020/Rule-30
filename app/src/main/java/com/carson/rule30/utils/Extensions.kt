@@ -2,6 +2,9 @@ package com.carson.rule30.utils
 
 import kotlin.random.Random.Default.nextInt
 
+/**
+ * Shuffles an array randomly
+ */
 fun <T> Array<T>.shuffle(): Array<T> {
     for (index in this.indices) {
         val randomIndex = nextInt(this.size)
@@ -15,6 +18,9 @@ fun <T> Array<T>.shuffle(): Array<T> {
     return this
 }
 
+/**
+ * Shuffles a 2d array randomly
+ */
 fun <T> Array<Array<T>>.shuffle(): Array<Array<T>> {
     for (index in this.indices) {
         this[index] = this[index].shuffle()

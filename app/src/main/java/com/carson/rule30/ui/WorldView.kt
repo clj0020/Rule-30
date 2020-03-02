@@ -9,7 +9,6 @@ import android.view.ScaleGestureDetector
 import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.carson.rule30.R
 import com.carson.rule30.data.models.WorldPoint
 import kotlin.math.max
 import kotlin.math.min
@@ -21,10 +20,10 @@ class WorldView : View {
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    var scaleDetector: ScaleGestureDetector? = null
-    var scaleFactor = 1f
-    var scalePointX = 0f
-    var scalePointY = 0f
+    var mScaleDetector: ScaleGestureDetector? = null
+    var mScaleFactor = 1f
+    var mScalePointX = 0f
+    var mScalePointY = 0f
 
     private var mPositionX = 0f
     private var mPositionY = 50f
@@ -33,9 +32,9 @@ class WorldView : View {
     private val mMinZoom = 0.5f
     private val mMaxZoom = 5.0f
 
-    private val paint = Paint()
+    private val mPaint = Paint()
 
-    private var points: List<WorldPoint> = arrayListOf()
+    private var mPoints: List<WorldPoint> = arrayListOf()
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -49,12 +48,11 @@ class WorldView : View {
     }
 
     private fun initialize() {
-        paint.color = ContextCompat.getColor(context, android.R.color.black)
-        paint.style = Paint.Style.FILL
-        paint.textSize = context.resources.getDimension(R.dimen.text_size)
-        paint.isAntiAlias = true
+        mPaint.color = ContextCompat.getColor(context, android.R.color.black)
+        mPaint.style = Paint.Style.FILL
+        mPaint.isAntiAlias = true
 
-        scaleDetector = ScaleGestureDetector(context, ScaleListener())
+        mScaleDetector = ScaleGestureDetector(context, ScaleListener())
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -62,17 +60,17 @@ class WorldView : View {
 
         canvas.save()
         // Scale canvas to the scale factor and scale point.
-        canvas.scale(scaleFactor, scaleFactor, scalePointX, scalePointY)
+        canvas.scale(mScaleFactor, mScaleFactor, mScalePointX, mScalePointY)
         // Translate the canvas to the saved position.
         canvas.translate(mPositionX, mPositionY)
 
         // Draw a circle for every point in the points array.
-        for (point in points) {
+        for (point in mPoints) {
             canvas.drawCircle(
                 point.xCoord,
                 point.yCoord,
                 point.radius,
-                paint
+                mPaint
             )
         }
 
@@ -81,13 +79,13 @@ class WorldView : View {
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         //the scale gesture detector should inspect all the touch events
-        scaleDetector?.onTouchEvent(event)
+        mScaleDetector?.onTouchEvent(event)
         val action = event.action
         when (action and MotionEvent.ACTION_MASK) {
             MotionEvent.ACTION_DOWN -> {
                 //get x and y cords of where we touch the screen
-                val x = (event.x - scalePointX) / scaleFactor
-                val y = (event.y - scalePointY) / scaleFactor
+                val x = (event.x - mScalePointX) / mScaleFactor
+                val y = (event.y - mScalePointY) / mScaleFactor
 
                 //remember where touch event started
                 mLastTouchX = x
@@ -96,9 +94,9 @@ class WorldView : View {
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
-                val x = (event.x - scalePointX) / scaleFactor
-                val y = (event.y - scalePointY) / scaleFactor
-                if (scaleDetector?.isInProgress == false) {
+                val x = (event.x - mScalePointX) / mScaleFactor
+                val y = (event.y - mScalePointY) / mScaleFactor
+                if (mScaleDetector?.isInProgress == false) {
                     //calculate the distance in x and y directions
                     val distanceX: Float = x - mLastTouchX
                     val distanceY: Float = y - mLastTouchY
@@ -124,19 +122,19 @@ class WorldView : View {
 
     inner class ScaleListener : SimpleOnScaleGestureListener() {
         override fun onScale(detector: ScaleGestureDetector): Boolean {
-            scaleFactor *= detector.scaleFactor
-            scalePointX = detector.focusX
-            scalePointY = detector.focusY
-            scaleFactor = max(mMinZoom, min(scaleFactor, mMaxZoom))
+            mScaleFactor *= detector.scaleFactor
+            mScalePointX = detector.focusX
+            mScalePointY = detector.focusY
+            mScaleFactor = max(mMinZoom, min(mScaleFactor, mMaxZoom))
             invalidate()
             return true
         }
     }
 
     fun resetCamera() {
-        scaleFactor = 1f
-        scalePointX = 0f
-        scalePointY = 0f
+        mScaleFactor = 1f
+        mScalePointX = 0f
+        mScalePointY = 0f
 
         mPositionX = 0f
         mPositionY = 50f
@@ -146,7 +144,7 @@ class WorldView : View {
     }
 
     fun setPoints(newPoints: List<WorldPoint>) {
-        points = newPoints
+        mPoints = newPoints
         invalidate()
     }
 

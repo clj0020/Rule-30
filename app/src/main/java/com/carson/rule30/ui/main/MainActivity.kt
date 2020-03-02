@@ -31,6 +31,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
         mActivityMainBinding = viewDataBinding
         mActivityMainBinding?.lifecycleOwner = this
         viewModel.navigator = this
+
+        viewModel.resetWorld(getWidth())
     }
 
     /**
@@ -70,10 +72,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
                             viewModel.executeRule30CenterOut()
                         }
                         R.id.item_randomize_world -> {
-                            viewModel.randomlyGenerateWorld()
+                            viewModel.randomlyGenerateWorld(getWidth())
                         }
                         R.id.item_reset_world -> {
-                            viewModel.resetWorld()
+                            viewModel.resetWorld(getWidth())
                         }
                         R.id.item_shuffle_world -> {
                             if (viewModel.pointsLiveData.value?.size == 1) {

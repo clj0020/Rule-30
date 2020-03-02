@@ -2,10 +2,10 @@ package com.carson.rule30
 
 import android.app.Activity
 import android.app.Application
+import com.carson.rule30.di.DaggerAppComponent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
-import com.carson.rule30.di.DaggerAppComponent
 
 class Rule30Application : Application(), HasActivityInjector {
 
