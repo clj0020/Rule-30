@@ -4,7 +4,7 @@
 
 For implementation, I started with running rule 30 on a single array of either 1's or 0's. I then moved on to create an 
 object called a World which contains a 2 dimensional array of either 1's or 0's and created a method for running rule 30 on the points in that world.
-The world is supposed to represent a coordinate system with the rows representing each generation and the rows representing a generation's elements.
+The world is supposed to represent a coordinate system with the rows representing each generation and each row representing a generation's elements.
 To initialize a world, you put in the number of generations and the number of elements that are in each generation and then choose between 3 different ways
 of generating the points in the world. The world's generate method just creates a world with all elements having a zero value.
 The world's generate random method creates a world with every element being randomly chosen as 1 or 0. The generate random method can also take
